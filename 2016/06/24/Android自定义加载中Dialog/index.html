@@ -1,0 +1,856 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="开发中经常需要请求网络获取数据，我们在请求网络到得到数据时当中需要等待一些时间，为了增加用户体验，我们一般会用一个Dialog来提示用户我们在加载网络数据。今天我们来实现如下效果的加载中Dialog。
+从图中我们可以看到要这个Dialog是图片还有文字组成的，(不过我这里使用代码实现的，没有用图片)，以下是这个加载图形的代码：
+public class LVCircularRing extends">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android自定义加载中Dialog">
+<meta property="og:url" content="http://yoursite.com/2016/06/24/Android自定义加载中Dialog/index.html">
+<meta property="og:site_name" content="习惯沉默的Blog">
+<meta property="og:description" content="开发中经常需要请求网络获取数据，我们在请求网络到得到数据时当中需要等待一些时间，为了增加用户体验，我们一般会用一个Dialog来提示用户我们在加载网络数据。今天我们来实现如下效果的加载中Dialog。
+从图中我们可以看到要这个Dialog是图片还有文字组成的，(不过我这里使用代码实现的，没有用图片)，以下是这个加载图形的代码：
+public class LVCircularRing extends">
+<meta property="og:image" content="http://7xvlr6.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160624155145.jpg">
+<meta property="og:updated_time" content="2016-06-24T08:23:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android自定义加载中Dialog">
+<meta name="twitter:description" content="开发中经常需要请求网络获取数据，我们在请求网络到得到数据时当中需要等待一些时间，为了增加用户体验，我们一般会用一个Dialog来提示用户我们在加载网络数据。今天我们来实现如下效果的加载中Dialog。
+从图中我们可以看到要这个Dialog是图片还有文字组成的，(不过我这里使用代码实现的，没有用图片)，以下是这个加载图形的代码：
+public class LVCircularRing extends">
+<meta name="twitter:image" content="http://7xvlr6.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160624155145.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/06/24/Android自定义加载中Dialog/"/>
+
+  <title> Android自定义加载中Dialog | 习惯沉默的Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">习惯沉默的Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android自定义加载中Dialog
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-24T15:57:29+08:00" content="2016-06-24">
+              2016-06-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Android开发/" itemprop="url" rel="index">
+                    <span itemprop="name">Android开发</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/24/Android自定义加载中Dialog/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/24/Android自定义加载中Dialog/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>开发中经常需要请求网络获取数据，我们在请求网络到得到数据时当中需要等待一些时间，为了增加用户体验，我们一般会用一个Dialog来提示用户我们在加载网络数据。今天我们来实现如下效果的加载中Dialog。<br><img src="http://7xvlr6.com1.z0.glb.clouddn.com/QQ%E5%9B%BE%E7%89%8720160624155145.jpg" alt=""></p>
+<p>从图中我们可以看到要这个Dialog是图片还有文字组成的，(不过我这里使用代码实现的，没有用图片)，以下是这个加载图形的代码：</p>
+<pre><code>public class LVCircularRing extends View {
+
+private float mWidth = 0f;
+private float mPadding = 0f;
+private float startAngle = 0f;
+private Paint mPaint;
+
+public LVCircularRing(Context context) {
+    this(context, null);
+}
+
+public LVCircularRing(Context context, AttributeSet attrs) {
+    this(context, attrs, 0);
+}
+
+public LVCircularRing(Context context, AttributeSet attrs, int defStyleAttr) {
+    super(context, attrs, defStyleAttr);
+    initPaint();
+}
+
+@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+    if (getMeasuredWidth() &gt; getHeight())
+        mWidth = getMeasuredHeight();
+    else
+        mWidth = getMeasuredWidth();
+    mPadding = 5;
+}
+
+@Override
+protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+
+    mPaint.setColor(Color.argb(100, 255, 255, 255));
+    canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2 - mPadding, mPaint);
+    mPaint.setColor(Color.WHITE);
+    RectF rectF = new RectF(mPadding, mPadding, mWidth - mPadding, mWidth - mPadding);
+    canvas.drawArc(rectF, startAngle, 100
+            , false, mPaint);//第四个参数是否显示半径
+
+}
+
+
+private void initPaint() {
+    mPaint = new Paint();
+    mPaint.setAntiAlias(true);
+    mPaint.setStyle(Paint.Style.STROKE);
+    mPaint.setColor(Color.WHITE);
+    mPaint.setStrokeWidth(8);
+}
+
+public void startAnim() {
+    stopAnim();
+    startViewAnim(0f, 1f, 1000);
+}
+
+public void stopAnim() {
+    if (valueAnimator != null) {
+        clearAnimation();
+        valueAnimator.setRepeatCount(1);
+        valueAnimator.cancel();
+        valueAnimator.end();
+    }
+}
+
+ValueAnimator valueAnimator;
+
+private ValueAnimator startViewAnim(float startF, final float endF, long time) {
+    valueAnimator = ValueAnimator.ofFloat(startF, endF);
+
+    valueAnimator.setDuration(time);
+    valueAnimator.setInterpolator(new LinearInterpolator());
+    valueAnimator.setRepeatCount(ValueAnimator.INFINITE);//无限循环
+    valueAnimator.setRepeatMode(ValueAnimator.RESTART);//
+
+    valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        @Override
+        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+
+            float value = (float) valueAnimator.getAnimatedValue();
+            startAngle = 360 * value;
+
+            invalidate();
+        }
+    });
+    valueAnimator.addListener(new AnimatorListenerAdapter() {
+        @Override
+        public void onAnimationEnd(Animator animation) {
+            super.onAnimationEnd(animation);
+        }
+    });
+    if (!valueAnimator.isRunning()) {
+        valueAnimator.start();
+    }
+
+    return valueAnimator;
+}
+}
+</code></pre><p>Dialog代码：</p>
+<pre><code>public class LoadingDialog {
+LVCircularRing mLoadingView;
+Dialog mLoadingDialog;
+
+public LoadingDialog(Context context,String msg) {
+    // 首先得到整个View
+    View view = LayoutInflater.from(context).inflate(
+            R.layout.loading_dialog_view, null);
+    // 获取整个布局
+    LinearLayout layout = (LinearLayout) view.findViewById(R.id.dialog_view);
+    // 页面中的LoadingView
+    mLoadingView = (LVCircularRing) view.findViewById(R.id.lv_circularring);
+    // 页面中显示文本
+    TextView loadingText = (TextView) view.findViewById(R.id.loading_text);
+    // 显示文本
+    loadingText.setText(msg);
+    // 创建自定义样式的Dialog
+    mLoadingDialog = new Dialog(context, R.style.loading_dialog);
+    // 设置返回键无效
+    mLoadingDialog.setCancelable(false);
+    mLoadingDialog.setContentView(layout, new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.MATCH_PARENT));
+}
+
+public void show(){
+    mLoadingDialog.show();
+    mLoadingView.startAnim();
+}
+
+public void close(){
+    if (mLoadingDialog!=null) {
+        mLoadingView.stopAnim();
+        mLoadingDialog.dismiss();
+        mLoadingDialog=null;
+    }
+}
+}
+</code></pre><p>布局文件loading_dialog_view代码：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+android:id=&quot;@+id/dialog_view&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;match_parent&quot;
+android:gravity=&quot;center&quot;
+android:background=&quot;@drawable/dialog_bg&quot;
+android:padding=&quot;20dp&quot;
+android:orientation=&quot;vertical&quot;&gt;
+
+&lt;com.ye.daqiapp.ui.widget.loading.LVCircularRing
+    android:id=&quot;@+id/lv_circularring&quot;
+    android:layout_width=&quot;50dp&quot;
+    android:layout_height=&quot;50dp&quot;/&gt;
+
+&lt;TextView
+    android:id=&quot;@+id/loading_text&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:textColor=&quot;#ffffff&quot;
+    android:layout_marginTop=&quot;5dp&quot;
+    android:textSize=&quot;15sp&quot;/&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><p>Dialog中Style代码：</p>
+<pre><code>&lt;style name=&quot;loading_dialog&quot; parent=&quot;android:style/Theme.Dialog&quot;&gt;
+    &lt;item name=&quot;android:windowFrame&quot;&gt;@null&lt;/item&gt;
+    &lt;item name=&quot;android:windowNoTitle&quot;&gt;true&lt;/item&gt;
+    &lt;item name=&quot;android:windowBackground&quot;&gt;@android:color/transparent&lt;/item&gt;
+    &lt;item name=&quot;android:windowIsFloating&quot;&gt;true&lt;/item&gt;
+    &lt;item name=&quot;android:backgroundDimEnabled&quot;&gt;false&lt;/item&gt;
+    &lt;item name=&quot;android:windowContentOverlay&quot;&gt;@null&lt;/item&gt;
+&lt;/style&gt;
+</code></pre><p>背景dialog_bg代码</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;shape xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+&lt;!-- 内部颜色 --&gt;
+&lt;solid android:color=&quot;#444444&quot; /&gt;
+
+&lt;!-- 圆角的幅度 --&gt;
+&lt;corners
+    android:bottomLeftRadius=&quot;3dp&quot;
+    android:bottomRightRadius=&quot;3dp&quot;
+    android:topLeftRadius=&quot;3dp&quot;
+    android:topRightRadius=&quot;3dp&quot; /&gt;
+&lt;/shape&gt;
+</code></pre><p>如何使用：<br>在需要使用的地方初始化Dialog:</p>
+<pre><code>LoadingDialog dialog=new LoadingDialog(context,&quot;玩命加载中...&quot;);
+//显示Dialog
+dialog.show();
+//关闭Dialog
+dialog.close();
+</code></pre><p>附上一些加载动画地址：<br><a href="https://github.com/ldoublem/LoadingView" target="_blank" rel="external">LoadingView</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xvlr6.com1.z0.glb.clouddn.com/IMG_0537_%E5%89%AF%E6%9C%AC.png" alt="大弃 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xvlr6.com1.z0.glb.clouddn.com/IMG_0533_%E5%89%AF%E6%9C%AC.png" alt="大弃 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag">#Android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/22/Android面试题整理/" rel="next" title="Android面试题整理">
+                <i class="fa fa-chevron-left"></i> Android面试题整理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/28/Android-Studio插件整理/" rel="prev" title="Android Studio插件整理">
+                Android Studio插件整理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/06/24/Android自定义加载中Dialog/"
+     data-title="Android自定义加载中Dialog"
+     data-content=""
+     data-url="http://yoursite.com/2016/06/24/Android自定义加载中Dialog/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/06/24/Android自定义加载中Dialog/"
+           data-title="Android自定义加载中Dialog" data-url="http://yoursite.com/2016/06/24/Android自定义加载中Dialog/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="大弃" />
+          <p class="site-author-name" itemprop="name">大弃</p>
+          <p class="site-description motion-element" itemprop="description">追求技术的路上永远不能停下脚步。。。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大弃</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"ydmmocoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
