@@ -756,6 +756,36 @@ public void onFailure(Throwable t){
 <p>这样就可以在基类中进行ButterKnife的初始化，不必要每个类中都要初始化，对开发框架的搭建更加方便。</p>
 <p>2.在Android Studio的设置界面，对在当前类中是否强制初始化提供了默认值设置，这样就可以让插件使用更符合自己的操作习惯。</p>
 <p><img src="https://github.com/OriginalLove/Android-ButterKnife-Plugin-Plus/raw/master/img/2.png" alt=""></p>
+<h1 id="60-ApkMultiChannelPlugin"><a href="#60-ApkMultiChannelPlugin" class="headerlink" title="60. ApkMultiChannelPlugin"></a>60. <a href="https://github.com/nukc/ApkMultiChannelPlugin" target="_blank" rel="external">ApkMultiChannelPlugin</a></h1><p>这是一个为了方便 Android 多渠道打包的 Android Studio / IDEA 插件</p>
+<p><strong>安装:</strong></p>
+<ul>
+<li>打开 Android Studio: 打开 Setting/Preferences -&gt; Plugins -&gt; Browse repositories 然后搜索 ApkMultiChannel 安装重启</li>
+</ul>
+<p>或者</p>
+<ul>
+<li>下载 <a href="https://plugins.jetbrains.com/idea/plugin/9369" target="_blank" rel="external">ApkMultiChannelPlugin.jar</a> 然后 Setting/Preferences -&gt; Plugins -&gt; Install plugin from disk 选择 ApkMultiChannelPlugin.jar 安装重启</li>
+</ul>
+<p><strong>使用方式:</strong></p>
+<ol>
+<li><p>选择 apk</p>
+<p>选择一个 apk 然后右键，点击 Build MultiChannel<br><img src="https://raw.githubusercontent.com/nukc/ApkMultiChannelPlugin/master/art/choose-apk.png" alt=""></p>
+</li>
+<li><p>配置</p>
+<p>配置签名信息，打包方式和渠道等<br><img src="https://raw.githubusercontent.com/nukc/ApkMultiChannelPlugin/master/art/setting.png" alt=""></p>
+<p>配置说明：</p>
+<p>Key Store Path: 签名文件的路径</p>
+<p>Key Store Password: 签名文件的密码</p>
+<p>Key Alias: 密钥别名</p>
+<p>Key Password: 密钥密码 </p>
+<p>Zipalign Path: zipalign文件的路径（用于优化 apk；zipalign 可以确保所有未压缩的数据均是以相对于文件开始部分的特定字节对齐开始，这样可减少应用消耗的 RAM 量。）</p>
+<p>Signer Version: 选择签名版本：apksigner 和 jarsigner </p>
+<p>Build Type: 打包方式 </p>
+<p>Channels: 渠道列表，每行一个，最前面可加 &gt; 或不加（保存信息的时候，程序会自行加上）</p>
+</li>
+<li><p>开始打包</p>
+<p>配置完成之后按 OK 就会开始进行渠道打包，文件会输出在选中的apk的当前目录下的channels目录中<br><img src="https://raw.githubusercontent.com/nukc/ApkMultiChannelPlugin/master/art/output.png" alt=""></p>
+</li>
+</ol>
 <p>本文会持续更新（如果发现有好玩，好用的插件，欢迎通过Email:<a href="">ydmmocoo@gmail.com</a>告诉我），请持续关注。哈哈！</p>
 
           
